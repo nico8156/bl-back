@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+        - name: backend-app
+          image: nicobzh/backend-demo-app:latest
+          ports:
+            - containerPort: 9090
+          env:
+            - name: MYSQL_HOST
+              value: mysql-service
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USERNAME
+              value: root
+            - name: MYSQL_PASSWORD
+              value: root
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-app-service
+spec:
+  type: ClusterIP
+  selector:
+    app: backend-app
+  ports:
+    - port: 9090
+      targetPort: 9090
