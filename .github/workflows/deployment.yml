@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout
-        run: actions/checkout@v3
+        uses: actions/checkout@v3
       - name: Login Into Dockerhub
         uses: docker/login-action@v2
         with:
