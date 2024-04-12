@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend-app
-          image: nicobzh/backend-demo-app:latest
+          image: nicobzh/backend-demo-app
           ports:
             - containerPort: 9090
           env:

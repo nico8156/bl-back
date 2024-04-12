@@ -28,13 +28,3 @@ jobs:
           docker build -t nicobzh/backend-demo-app:$IMAGE_TAG .
           docker push nicobzh/backend-demo-app:$IMAGE_TAG
           echo "::set-output name=image::nicobzh/backend-demo-app:$IMAGE_TAG"
-
-      - name: Install Kubectl
-        uses: azure/setup-kubectl@v1
-
-      - name: Update Image to Deployment File
-        run: |
-          sed -i "s|image: nicobzh/backend-demo-app:.*|image: nicobzh/backend-demo-app:${{ steps.build-image.outputs.image }}|" k8s/bl-api-deployment.yml
-      - name: Apply Deployment
-        run: |
-          kubectl apply -f k8s/bl-api-deployment.yml

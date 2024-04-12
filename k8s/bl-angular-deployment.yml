@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend-app-deployment
-          image: nicobzh/frontent-demo-app:latest
+          image: nicobzh/frontent-demo-app
           ports:
             - containerPort: 80
 

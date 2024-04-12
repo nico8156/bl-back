@@ -3,7 +3,7 @@ import com.blogdelivres.bl.dto.*;
 
 public interface AuthService {
 
-    UserDto createUser(RegisterRequest registerRequest );
+    AuthenticationResponse createUser(RegisterRequest registerRequest );
 
     boolean isUserInDB(String email);
 

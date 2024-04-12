@@ -29,7 +29,9 @@ public class authServiceImpl implements AuthService {
     private JwtUserService jwtUserService;
 
     @Override
-    public UserDto createUser(RegisterRequest registerRequest){
+    public AuthenticationResponse createUser(RegisterRequest registerRequest){
+
+
         UserBis userBis = new UserBis();
         userBis.setUsername(registerRequest.getUsername());
         userBis.setEmail(registerRequest.getEmail());
@@ -42,18 +44,21 @@ public class authServiceImpl implements AuthService {
         firstLibrary.setLibraryName("My First Library");
         libraryRepository.save(firstLibrary);
 
-        UserDto userDto = new UserDto();
-        userDto.setUsername(createdUser.getUsername());
-        userDto.setUserRole(createdUser.getUserRole());
-        return userDto;
+        final UserDetails userDetails = jwtUserService.userDetailsService().loadUserByUsername(createdUser.getEmail());
+        UserBis optionalUser = userRepository.findFirstByEmail(userDetails.getUsername()).orElse(null);
+        final String jwt = jwtUtil.generateToken(userDetails);
+        if(optionalUser != null){
+            return logToResponse(optionalUser, jwt);
+        } else {
+            return null;
+        }
     }
 
-    //methode a revoir , donne des resultats falsy ...
     @Override
     public boolean isUserInDB(String email){
         return userRepository.findFirstByEmail(email).isPresent();
     }
-    //methode a revoir , donne des resultats falsy ...
+
     @Override
     public boolean isUsernameInDB(String username){return userRepository.findByUsername(username).isPresent();}
 

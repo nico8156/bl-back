@@ -21,16 +21,21 @@ public class UserController {
 
     @PostMapping("register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+
         log.info("dans inscription");
         if(authService.isUserInDB(registerRequest.getEmail())){
             return new ResponseEntity<>("User already exists with this email", HttpStatus.NOT_ACCEPTABLE);
         }
-        UserDto createdUserDto = authService.createUser(registerRequest);
-        if (createdUserDto == null) {
+        if(authService.isUsernameInDB(registerRequest.getUsername())){
+            return new ResponseEntity<>("User already exists with this username", HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        AuthenticationResponse createdUser = authService.createUser(registerRequest);
+        if (createdUser == null) {
             return new ResponseEntity<>("User not created, try again later", HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
+        return new ResponseEntity<AuthenticationResponse>(createdUser, HttpStatus.CREATED);
     }
 
     @PostMapping("login")
