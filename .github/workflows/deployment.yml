@@ -1,0 +1,19 @@
+name: Deployment to k8s
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu:latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        run: actions/checkout@v3
+      - name: Login Into Dockerhub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
