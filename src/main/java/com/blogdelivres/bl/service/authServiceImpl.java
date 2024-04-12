@@ -110,7 +110,7 @@ public class authServiceImpl implements AuthService {
         }
     }
     private AuthenticationResponse dataToResponse(UserBis user, String token){
-        AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
+        return AuthenticationResponse.builder()
                 .jwt(token.substring(7))
                 .userRole(user.getUserRole())
                 .userId(user.getId())
@@ -118,10 +118,9 @@ public class authServiceImpl implements AuthService {
                 .username(user.getRealUsername())
                 .photo(user.getPhoto())
                 .build();
-        return authenticationResponse;
     }
     private AuthenticationResponse logToResponse(UserBis user, String token){
-        AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
+        return AuthenticationResponse.builder()
                 .jwt(token)
                 .userRole(user.getUserRole())
                 .userId(user.getId())
@@ -129,7 +128,6 @@ public class authServiceImpl implements AuthService {
                 .username(user.getRealUsername())
                 .photo(user.getPhoto())
                 .build();
-        return authenticationResponse;
     }
 
 
