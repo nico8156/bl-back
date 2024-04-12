@@ -34,4 +34,4 @@ jobs:
 
       - name: Update Image to Deployment File
         run: |
-          sed -i "s|image: nicobzh/backend-demo-app:.*|image: nicobzh/backend-demo-app:${{ steps.build-image.outputs.image }}|" bl-api-deployment.yml 
+          sed -i "s|image: nicobzh/backend-demo-app:.*|image: nicobzh/backend-demo-app:${{ steps.build-image.outputs.image }}|" k8s/bl-api-deployment.yml 
